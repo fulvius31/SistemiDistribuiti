@@ -1,13 +1,57 @@
 version: '2'
 services:
   scanner:
-    image: debian:latest
-    tty: true
+    build:
+        context: ./
+        dockerfile: Dockerfile
+    command: sleep 5 
+    command: /root/fakelogmaker.sh
+    depends_on:
+        - "rabbit1"
+    networks:
+        - "app_net"
+  msg-handler1:
+    build:
+        context: ./
+        dockerfile: Dockerfile-msghandler
+    command: python /root/receiver.py topic1
+    depends_on:
+        - "rabbit1"
+    networks:
+        - "app_net"
+  msg-handler2:
+    build:
+        context: ./
+        dockerfile: Dockerfile-msghandler
+    command: python /root/receiver.py topic2
+    depends_on:
+        - "rabbit1"
+    networks:
+        - "app_net"
+  msg-handler3:
+    build:
+        context: ./
+        dockerfile: Dockerfile-msghandler
+    command: python /root/receiver.py topic3
+    depends_on:
+        - "rabbit1"
+    networks:
+        - "app_net"
+  msg-handler4:
+    build:
+        context: ./
+        dockerfile: Dockerfile-msghandler
+    command: python /root/receiver.py topic4
+    depends_on:
+        - "rabbit1"
+    networks:
+        - "app_net"
+
+
   rabbit1:
     image: rabbitmq:3-management
     hostname: "rabbit1"
     environment:
-        RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
         RABBITMQ_DEFAULT_USER: "guest"
         RABBITMQ_DEFAULT_PASS: "guest"
         RABBITMQ_DEFAULT_VHOST: "/"
@@ -16,3 +60,13 @@ services:
         - "5672:5672"
     labels:
         NAME: "rabbitmq1"
+    networks:
+      app_net:
+        ipv4_address: 10.123.123.253
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+      - subnet: 10.123.123.0/24       
