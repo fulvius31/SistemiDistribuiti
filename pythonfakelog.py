@@ -34,64 +34,34 @@ def run_command(rcmd):
             logging.debug( "Executable '%s' returned successfully. First line of response was \"%s\"" %(executable, response_stdout.split('\n')[0] ))
             return response_stdout
 def findip():
-    with open('./ERROR_WARN.log', 'r') as searchfile:
+    hostname = run_command("hostname").strip()
+    with open('/root/ERROR_WARN.log', 'r') as searchfile:
             for line in searchfile:
                 if "10.18.122.23" in line:
-                    print line[:23]
-                    hostname = run_command("hostname")
-                    print hostname
-                    print line[23:].split("-",1)[1]
+                    msg = line[:23]+" "+hostname+line[23:].split("-",1)[1]
+                    sendtoqueue('10.18.122.23',msg)
+                if "10.18.122.24" in line:
+                    msg = line[:23]+" "+hostname+line[23:].split("-",1)[1]
+                    sendtoqueue('10.18.122.24',msg)
+                if "10.18.122.30" in line:
+                    msg = line[:23]+" "+hostname+line[23:].split("-",1)[1]
+                    sendtoqueue('10.18.122.30',msg)
 
-def sendlastoccurance():
+def sendtoqueue(iptopic,msg):
 
-    r = run_command("tail -n 1 /root/fake.log").strip()
-    if "TOPIC1" in r:
         connection = pika.BlockingConnection(pika.ConnectionParameters(host='10.123.123.253'))
         channel = connection.channel()
 
-        channel.queue_declare(queue='topic1')
+        channel.queue_declare(queue=iptopic)
 
         channel.basic_publish(exchange='',
-                            routing_key='topic1',
-                            body=r)
+                            routing_key=iptopic,
+                            body=msg)
         connection.close()
 
-    elif "TOPIC2" in r:
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host='10.123.123.253'))
-        channel = connection.channel()
-
-        channel.queue_declare(queue='topic2')
-
-        channel.basic_publish(exchange='',
-                            routing_key='topic2',
-                            body=r)
-
-    elif "TOPIC3" in r:
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host='10.123.123.253'))
-        channel = connection.channel()
-
-        channel.queue_declare(queue='topic3')
-
-        channel.basic_publish(exchange='',
-                            routing_key='topic3',
-                            body=r)
-
-    elif "TOPIC4" in r:
-        connection = pika.BlockingConnection(pika.ConnectionParameters(host='10.123.123.253'))
-        channel = connection.channel()
-
-        channel.queue_declare(queue='topic4')
-
-        channel.basic_publish(exchange='',
-                            routing_key='topic4',
-                            body=r)
-
-    return r
-
 def main():
-    linea = findip()
-    print linea
-	
+    time.sleep(10)
+    findip()	
 if __name__ == "__main__":
     main()
 

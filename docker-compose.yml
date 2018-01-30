@@ -4,8 +4,7 @@ services:
     build:
         context: ./
         dockerfile: Dockerfile
-    command: sleep 5 
-    command: /root/fakelogmaker.sh
+    command: python /root/pythonfakelog.py
     depends_on:
         - "rabbit1"
     networks:
@@ -14,7 +13,7 @@ services:
     build:
         context: ./
         dockerfile: Dockerfile-msghandler
-    command: python /root/receiver.py topic1
+    command: python /root/receiver.py 10.18.122.23
     depends_on:
         - "rabbit1"
     networks:
@@ -23,7 +22,7 @@ services:
     build:
         context: ./
         dockerfile: Dockerfile-msghandler
-    command: python /root/receiver.py topic2
+    command: python /root/receiver.py 10.18.122.24
     depends_on:
         - "rabbit1"
     networks:
@@ -32,7 +31,7 @@ services:
     build:
         context: ./
         dockerfile: Dockerfile-msghandler
-    command: python /root/receiver.py topic3
+    command: python /root/receiver.py 10.18.122.30
     depends_on:
         - "rabbit1"
     networks:
@@ -41,7 +40,7 @@ services:
     build:
         context: ./
         dockerfile: Dockerfile-msghandler
-    command: python /root/receiver.py topic4
+    #command: python /root/receiver.py topic4
     depends_on:
         - "rabbit1"
     networks:

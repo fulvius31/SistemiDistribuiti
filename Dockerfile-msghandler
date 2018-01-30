@@ -3,7 +3,8 @@ WORKDIR .
 ADD receiver.py  /root/receiver.py
 #ADD script.sh    /root/script.sh
 RUN apt-get update && apt-get install -y \
-	python-pika
+	python-pika python-pip
+RUN pip install websocket-client
 RUN chmod +x /root/receiver.py
 #RUN chmod +x /root/script.sh
 CMD ["bash"]
