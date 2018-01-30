@@ -36,16 +36,6 @@ services:
         - "rabbit1"
     networks:
         - "app_net"
-  msg-handler4:
-    build:
-        context: ./
-        dockerfile: Dockerfile-msghandler
-    #command: python /root/receiver.py topic4
-    depends_on:
-        - "rabbit1"
-    networks:
-        - "app_net"
-
 
   rabbit1:
     image: rabbitmq:3-management
