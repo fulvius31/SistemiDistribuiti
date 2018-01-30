@@ -33,6 +33,14 @@ def run_command(rcmd):
         else:
             logging.debug( "Executable '%s' returned successfully. First line of response was \"%s\"" %(executable, response_stdout.split('\n')[0] ))
             return response_stdout
+def findip():
+    with open('./ERROR_WARN.log', 'r') as searchfile:
+            for line in searchfile:
+                if "10.18.122.23" in line:
+                    print line[:23]
+                    hostname = run_command("hostname")
+                    print hostname
+                    print line[23:].split("-",1)[1]
 
 def sendlastoccurance():
 
@@ -81,7 +89,7 @@ def sendlastoccurance():
     return r
 
 def main():
-    linea = sendlastoccurance()
+    linea = findip()
     print linea
 	
 if __name__ == "__main__":
