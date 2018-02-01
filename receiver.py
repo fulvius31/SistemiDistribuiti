@@ -13,7 +13,7 @@ channel.queue_declare(queue=sys.argv[1])
 
 def callback(ch, method, properties, body):
     print(" [x] Received %r" % body)
-    ws = create_connection("ws://localhost:8080/Manager-war/echo")
+    ws = create_connection("ws://10.123.123.1:8080/Homework3-war/write")
     ws.send(body)
     print "Reeiving..."
     result =  ws.recv()

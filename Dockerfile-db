@@ -1,0 +1,5 @@
+FROM mysql:latest
+ENV MYSQL_ROOT_PASSWORD=SistemiDistribuiti2017
+ENV MYSQL_USER=root
+ENV MYSQL_PASSWORD=SistemiDistribuiti2017
+ENV MYSQL_DATABASE=sistemidistribuiti
