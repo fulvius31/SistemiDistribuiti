@@ -62,12 +62,13 @@ public class WriteEndPoint {
     public void onMessage(String message, Session session) throws ClassNotFoundException, SQLException{
         
         String[] msg = new String[3];
-        
-        msg = opmsg.MessageHtoArray.Operation(message);
-        
-        System.out.println("Message from " + session.getId() + ": " + msg[0] + msg[1] + msg[2]);
-        Message m = new Message(msg[0], msg[1], msg[2]);
-        addMessage(m);
+        if(message.length() > 23){
+            msg = opmsg.MessageHtoArray.Operation(message);
+
+            System.out.println("Message from " + session.getId() + ": " + msg[0] + msg[1] + msg[2]);
+            Message m = new Message(msg[0], msg[1], msg[2]);
+            addMessage(m);
+        }
    }
  
     /**

@@ -4,7 +4,7 @@ import sys
 import time
 from websocket import create_connection
 
-time.sleep(10)
+time.sleep(20)
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(host='10.123.123.253'))
 channel = connection.channel()

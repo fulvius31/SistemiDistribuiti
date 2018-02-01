@@ -60,7 +60,7 @@ def sendtoqueue(iptopic,msg):
         connection.close()
 
 def main():
-    time.sleep(10)
+    time.sleep(20)
     findip()	
 if __name__ == "__main__":
     main()
