@@ -1,1 +1,7 @@
 *.swp
+./Homework3/nbproject/private/
+./Homework3/build/
+./Homework3/nbbuild/
+./Homework3/dist/
+./Homework3/nbdist/
+./Homework3/.nb-gradle/
