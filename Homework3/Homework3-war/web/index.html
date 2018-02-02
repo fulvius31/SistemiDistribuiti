@@ -13,7 +13,8 @@
         </div>
         <div>
             <button type="button" onclick="openSocket();" >Open</button>
-            <button type="button" onclick="send();" >Send</button>
+            <button type="button" onclick="sendQ1();" >Order by Time</button>
+            <button type="button" onclick="sendQ2();" >Events Order by Time</button>
             <button type="button" onclick="closeSocket();" >Close</button>
         </div>
         <!-- Server responses get written here -->
@@ -60,17 +61,25 @@
             /**
              * Sends the value of the text input to the server
              */
-            function send(){
-                var asd = document.getElementById("messageinput").value;
-                webSocket.send(asd);
+            function sendQ1(){
+                var query = "query1";
+                var text = document.getElementById("messageinput").value;
+           //     webSocket.send(text);
+           webSocket.send(query);
+            }
+             function sendQ2(){
+                var query = "query2";
+                var text = document.getElementById("messageinput").value;
+           //     webSocket.send(text);
+           webSocket.send(query);
             }
            
             function closeSocket(){
                 webSocket.close();
             }
  
-            function writeResponse(asd){
-                messages.innerHTML += "<br/>" + asd;
+            function writeResponse(text){
+                messages.innerHTML += "<br/>" + text;
             }
            
         </script>
