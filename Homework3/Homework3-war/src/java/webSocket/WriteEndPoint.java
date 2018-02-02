@@ -66,7 +66,7 @@ public class WriteEndPoint {
             msg = opmsg.MessageHtoArray.Operation(message);
 
             System.out.println("Message from " + session.getId() + ": " + msg[0] + msg[1] + msg[2]);
-            Message m = new Message(msg[0], msg[1], msg[2]);
+            Message m = new Message(msg[1], msg[0], msg[2]);
             addMessage(m);
         }
    }
