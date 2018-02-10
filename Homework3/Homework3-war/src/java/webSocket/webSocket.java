@@ -63,19 +63,21 @@ public class webSocket {
         
         String[] msg = new String[3];
         
-        msg = opmsg.MessageHtoArray.Operation(message);
-        
-        //System.out.println("Message from " + session.getId() + ": " + msg[0] + msg[1] + msg[2]);
-        System.out.println("PRIMA PARTE "+msg[0]);
-        System.out.println("SECONDA PARTE "+msg[1]);
-        System.out.println("TERZA PARTE "+msg[2]);
+        if( msg.length >= 23 ){
+            msg = opmsg.MessageHtoArray.Operation(message);
+
+            //System.out.println("Message from " + session.getId() + ": " + msg[0] + msg[1] + msg[2]);
+            System.out.println("PRIMA PARTE "+msg[0]);
+            System.out.println("SECONDA PARTE "+msg[1]);
+            System.out.println("TERZA PARTE "+msg[2]);
+        }
 
         try {
         //    NewClass s = new NewClass();
          //String resp=   s.doQuery(message);
 
              //System.out.println( bean.doQuery(message));
-             session.getBasicRemote().sendText( lookupshowBeanDB().showBeanDB() );
+             session.getBasicRemote().sendText( lookupshowBeanDB().showBeanDB("query1") );
              //session.getBasicRemote().sendText( showBean.showBeanDB());
             
             } catch (IOException ex) {

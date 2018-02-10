@@ -1,9 +1,17 @@
 version: '2'
 services:
+  datamanager:
+    build:
+        context: ./datamanager
+        dockerfile: Dockerfile-dataman
+    networks:
+      app_net:
+        ipv4_address: 10.123.123.100
+
   scanner:
     build:
-        context: ./
-        dockerfile: Dockerfile
+        context: ./scanner
+        dockerfile: Dockerfile-scanner
     command: python /root/pythonfakelog.py
     depends_on:
         - "rabbit1"
@@ -11,7 +19,7 @@ services:
         - "app_net"
   msg-handler1:
     build:
-        context: ./
+        context: ./msg-handler
         dockerfile: Dockerfile-msghandler
     command: python /root/receiver.py 10.18.122.23
     depends_on:
@@ -20,7 +28,7 @@ services:
         - "app_net"
   msg-handler2:
     build:
-        context: ./
+        context: ./msg-handler
         dockerfile: Dockerfile-msghandler
     command: python /root/receiver.py 10.18.122.24
     depends_on:
@@ -29,7 +37,7 @@ services:
         - "app_net"
   msg-handler3:
     build:
-        context: ./
+        context: ./msg-handler
         dockerfile: Dockerfile-msghandler
     command: python /root/receiver.py 10.18.122.30
     depends_on:
@@ -52,68 +60,53 @@ services:
     networks:
       app_net:
         ipv4_address: 10.123.123.253
-
-  primarydb:
-    image: mysql
-    ports:
-      - "3306:3306"
-    environment:
-      MYSQL_ROOT_PASSWORD: SistemiDistribuiti2017
-      MYSQL_USER: root
-      MYSQL_PASSWORD: SistemiDistribuiti2017
-      MYSQL_DATABASE: sistemidistribuiti
+        
+  replica1:
+    build:
+        context: ./database
+        dockerfile: Dockerfile
+        args:
+          id : 0
     networks:
       app_net:
         ipv4_address: 10.123.123.200
 
-  replica1:
-    image: mysql
-    ports:
-      - "3307:3307"
-    environment:
-      MYSQL_ROOT_PASSWORD: SistemiDistribuiti2017
-      MYSQL_USER: root
-      MYSQL_PASSWORD: SistemiDistribuiti2017
-      MYSQL_DATABASE: sistemidistribuiti
+  replica2:
+    build:
+        context: ./database
+        dockerfile: Dockerfile
+        args:
+          id : 1
     networks:
       app_net:
         ipv4_address: 10.123.123.201
 
-  replica2:
-    image: mysql
-    ports:
-      - "3308:3308"
-    environment:
-      MYSQL_ROOT_PASSWORD: SistemiDistribuiti2017
-      MYSQL_USER: root
-      MYSQL_PASSWORD: SistemiDistribuiti2017
-      MYSQL_DATABASE: sistemidistribuiti
+  replica3:
+    build:
+        context: ./database
+        dockerfile: Dockerfile
+        args:
+          id : 2
     networks:
       app_net:
         ipv4_address: 10.123.123.202
 
-  replica3:
-    image: mysql
-    ports:
-      - "3309:3309"
-    environment:
-      MYSQL_ROOT_PASSWORD: SistemiDistribuiti2017
-      MYSQL_USER: root
-      MYSQL_PASSWORD: SistemiDistribuiti2017
-      MYSQL_DATABASE: sistemidistribuiti
+  replica4:
+    build:
+        context: ./database
+        dockerfile: Dockerfile
+        args:
+          id : 3
     networks:
       app_net:
         ipv4_address: 10.123.123.203
 
-  replica4:
-    image: mysql
-    ports:
-      - "3310:3310"
-    environment:
-      MYSQL_ROOT_PASSWORD: SistemiDistribuiti2017
-      MYSQL_USER: root
-      MYSQL_PASSWORD: SistemiDistribuiti2017
-      MYSQL_DATABASE: sistemidistribuiti
+  replica5:
+    build:
+        context: ./database
+        dockerfile: Dockerfile
+        args:
+          id : 4
     networks:
       app_net:
         ipv4_address: 10.123.123.204

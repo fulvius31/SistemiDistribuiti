@@ -15,6 +15,6 @@ import javax.ejb.Remote;
 @Remote
 public interface showBeanDBRemote {
 
-    public String showBeanDB() throws SQLException;
+    public String showBeanDB(String query) throws SQLException;
     
 }

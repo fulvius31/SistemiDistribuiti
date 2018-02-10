@@ -12,6 +12,7 @@ import java.io.Serializable;
  * @author kvothe
  */
 public class Message implements Serializable {
+
     private String id;
     private String timestamp;
     private String msg;
@@ -33,8 +34,5 @@ public class Message implements Serializable {
     public String getMsg() {
         return msg;
     }
- 
-    
-    
-    
+
 }

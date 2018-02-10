@@ -19,13 +19,13 @@ import message.Message;
 public class addBeanDB implements addBeanDBRemote{
 
     @Override
-    public boolean addBeanDB(Message m) throws SQLException {
+    public boolean addBeanDB(Message m, String leader) throws SQLException {
     
         String update = " INSERT INTO log VALUES(" +
                 "\'" + m.getId() + "\'," +
                 "\'" + m.getTimestamp() + "\', "+"\'"+
                 m.getMsg()+"\'"+ ")";
-        ConnettoreMysql connettore = new ConnettoreMysql();
+        ConnettoreMysql connettore = new ConnettoreMysql(leader);
         connettore.doUpdate(update);
         connettore.close();
         return true;

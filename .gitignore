@@ -5,3 +5,12 @@
 ./Homework3/dist/
 ./Homework3/nbdist/
 ./Homework3/.nb-gradle/
+/Homework3/nbproject/private/
+/Homework3/build/
+/Homework3/dist/
+/NodeApplication/NodeApplication-ejb/build/
+/NodeApplication/NodeApplication-ejb/dist/
+/NodeApplication/build/
+/NodeApplication/NodeApplication-war/build/
+/NodeApplication/dist/
+/NodeApplication/NodeApplication-war/dist/

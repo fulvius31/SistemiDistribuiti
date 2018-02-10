@@ -21,13 +21,13 @@ public class ConnettoreMysql {
     
     private Connection connection;
 
-    public ConnettoreMysql() {
+    public ConnettoreMysql(String replica) {
         
         try {
             Class.forName("com.mysql.jdbc.Driver");
             connection = 
                     DriverManager
-                            .getConnection("jdbc:mysql://10.123.123.200:3306/sistemidistribuiti", "root", "SistemiDistribuiti2017");
+                            .getConnection("jdbc:mysql://"+replica+":3306/sistemidistribuiti", "root", "SistemiDistribuiti2017");
             
         } catch (ClassNotFoundException | SQLException ex) {
             Logger.getLogger(ConnettoreMysql.class.getName())

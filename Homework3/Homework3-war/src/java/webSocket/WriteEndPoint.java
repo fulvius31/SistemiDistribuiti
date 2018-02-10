@@ -7,18 +7,23 @@ package webSocket;
 
 import java.io.IOException;
 import ejb_Remote.*;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.net.URISyntaxException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+import javax.websocket.DeploymentException;
 import javax.websocket.OnClose;
 import javax.websocket.OnMessage;
 import javax.websocket.OnOpen;
 import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 import message.Message;
+import opNode.Node;
 
 /**
  *
@@ -59,7 +64,7 @@ public class WriteEndPoint {
      * and allow us to react to it. For now the message is read as a String.
      */
     @OnMessage
-    public void onMessage(String message, Session session) throws ClassNotFoundException, SQLException{
+    public void onMessage(String message, Session session) throws ClassNotFoundException, SQLException, IOException, URISyntaxException, DeploymentException{
         
         String[] msg = new String[3];
         if(message.length() > 23){
@@ -67,6 +72,9 @@ public class WriteEndPoint {
 
             System.out.println("Message from " + session.getId() + ": " + msg[0] + msg[1] + msg[2]);
             Message m = new Message(msg[1], msg[0], msg[2]);
+           
+            Node nodo = new Node();
+            nodo.sendMessage(m);
             addMessage(m);
         }
    }
@@ -81,15 +89,19 @@ public class WriteEndPoint {
         System.out.println("Session " +session.getId()+" has ended");
     }
     
-    public String addMessage(Message mess){
+    private String addMessage(Message mess) throws IOException{
         addBeanDBRemote addBean = lookupAddBeanRemote();
-
-        try {
-            addBean.addBeanDB(mess);
-        } catch (SQLException ex) {
-            Logger.getLogger(webSocket.class.getName()).log(Level.SEVERE, null, ex);
-            System.err.println(" NON AGGIUNTO");
-        }
+        BufferedReader actualLeader = null;
+         try {
+            actualLeader = new BufferedReader(new FileReader("/root/leader"));
+            String leader = actualLeader.readLine();
+  
+            addBean.addBeanDB(mess,leader);
+        } catch (SQLException | IOException ex) {
+            Logger.getLogger(LeaderEndPoint.class.getName()).log(Level.SEVERE, null, ex);
+        }finally{
+             actualLeader.close();
+         }
         return " AGGIUNTO CON SUCCESSO";    
     }
 }

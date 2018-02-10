@@ -15,6 +15,6 @@ import message.Message;
 @Remote
 public interface addBeanDBRemote {
     
-    public boolean addBeanDB(Message m) throws SQLException;
+    public boolean addBeanDB(Message m, String leader) throws SQLException;
     
 }
