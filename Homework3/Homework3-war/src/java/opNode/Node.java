@@ -51,7 +51,7 @@ public class Node {
         logger.info(String.format("Session %s close because of %s", session.getId(), closeReason));
     }
 
-    public static void sendMessage(Message m) throws DeploymentException, URISyntaxException, IOException {
+    public static void sendMessage(String m) throws DeploymentException, URISyntaxException, IOException {
 
         String leader = "";
         Session session = null;
@@ -68,6 +68,6 @@ public class Node {
                 = client.connectToServer(Node.class,
                         new URI("ws://" + leader + ":8080/NodeApplication-war/message"));
         session.getBasicRemote()
-                .sendText(m.getId() + " " + m.getTimestamp() + " " + m.getMsg());
+                .sendText(m);
     }
 }

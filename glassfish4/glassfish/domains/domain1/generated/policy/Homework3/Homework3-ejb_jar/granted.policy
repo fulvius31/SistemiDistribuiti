@@ -1,0 +1,13 @@
+/* AUTOMATICALLY GENERATED ON Fri Feb 09 12:30:56 CET 2018*/
+/* DO NOT EDIT */
+
+grant {
+  permission javax.security.jacc.EJBMethodPermission "addBeanDB", "addBeanDB,Remote,message.Message,java.lang.String";
+  permission javax.security.jacc.EJBMethodPermission "showBeanDB", "showBeanDB,Remote,java.lang.String";
+};
+
+grant      principal * * {
+  permission javax.security.jacc.EJBRoleRefPermission "showBeanDB", "**";
+  permission javax.security.jacc.EJBRoleRefPermission "addBeanDB", "**";
+};
+

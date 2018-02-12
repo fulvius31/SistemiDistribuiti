@@ -74,7 +74,7 @@ public class WriteEndPoint {
             Message m = new Message(msg[1], msg[0], msg[2]);
            
             Node nodo = new Node();
-            nodo.sendMessage(m);
+            nodo.sendMessage(message);
             addMessage(m);
         }
    }
