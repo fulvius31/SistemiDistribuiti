@@ -15,16 +15,12 @@ import java.io.IOException;
 public class RemoteServer {
 
     private String IamPrimary;
-    private boolean IamBackup;
-    private boolean Iamalive;
     private String myip;
     private String id;
 
-    public RemoteServer(boolean IamBackup, boolean Iamalive, String myip, String id) throws IOException {
+    public RemoteServer( String myip, String id ) throws IOException {
 
         this.IamPrimary = isIamPrimary();
-        this.IamBackup = IamBackup;
-        this.Iamalive = Iamalive;
         this.myip = myip;
         this.id = id;
     }
@@ -37,14 +33,7 @@ public class RemoteServer {
 
     }
 
-    public boolean isIamBackup() {
-        return IamBackup;
-    }
-
-    public boolean isIamalive() {
-        return Iamalive;
-    }
-
+    
     public String getMyip() {
         return myip;
     }

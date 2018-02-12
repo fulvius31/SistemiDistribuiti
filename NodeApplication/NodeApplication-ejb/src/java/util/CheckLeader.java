@@ -22,14 +22,20 @@ public class CheckLeader {
     private String leader = "";
 
     public String actualLeader() throws IOException {
-        try {
-            actualLeader = new BufferedReader(new FileReader("/root/leader"));
-            leader = actualLeader.readLine();
+        int retry = 3;
+        
+        for(int i=0;i<retry;i++){
+            try {
+                actualLeader = new BufferedReader(new FileReader("/root/leader"));
+                leader = actualLeader.readLine();
+                
+                i = retry;
 
-        } catch (FileNotFoundException ex) {
-            Logger.getLogger(CheckLeader.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            actualLeader.close();
+            } catch (FileNotFoundException ex) {
+                Logger.getLogger(CheckLeader.class.getName()).log(Level.SEVERE, null, ex);
+            } finally {
+                actualLeader.close();
+            }
         }
 
         return leader;

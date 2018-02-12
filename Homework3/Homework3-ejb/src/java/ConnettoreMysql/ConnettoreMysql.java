@@ -18,70 +18,80 @@ import java.util.logging.Logger;
  * @author kvothe
  */
 public class ConnettoreMysql {
-    
+
     private Connection connection;
 
     public ConnettoreMysql(String replica) {
-        
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connection = 
-                    DriverManager
-                            .getConnection("jdbc:mysql://"+replica+":3306/sistemidistribuiti", "root", "SistemiDistribuiti2017");
-            
-        } catch (ClassNotFoundException | SQLException ex) {
-            Logger.getLogger(ConnettoreMysql.class.getName())
-                    .log(Level.INFO, null, ex);
-            System.err.println("CONNESSIONE FALLITA");
+
+        if (replica != null) {
+
+            try {
+                Class.forName("com.mysql.jdbc.Driver");
+                connection
+                        = DriverManager
+                                .getConnection("jdbc:mysql://" + replica + ":3306/sistemidistribuiti", "root", "SistemiDistribuiti2017");
+
+            } catch (ClassNotFoundException | SQLException ex) {
+                Logger.getLogger(ConnettoreMysql.class.getName())
+                        .log(Level.INFO, null, ex);
+                System.err.println("CONNESSIONE FALLITA");
+            }
         }
-        
+
     }
-    
+
     /**
      * esegue la query per conto del chiamante
+     *
      * @param query
      * @return ResultSet
      * @throws java.sql.SQLException
      */
-    public ResultSet doQuery(String query) throws SQLException{
+    public ResultSet doQuery(String query) throws SQLException {
         Statement stm = connection.createStatement();
-        
+
         return stm.executeQuery(query);
     }
-    
+
     /**
      * metodo che invoca update per conto del chiamante
+     *
      * @param update
      * @return true if ok, false otherwise
      */
-    public boolean doUpdate(String update){
+    public boolean doUpdate(String update) {
         Statement stm = null;
         try {
-             stm = connection.createStatement();
+            stm = connection.createStatement();
             stm.executeUpdate(update);
             return true;
         } catch (SQLException ex) {
             Logger.getLogger(ConnettoreMysql.class.getName())
                     .log(Level.INFO, null, ex);
             System.err.println("UPDATE failed: " + update);
-            
-        }finally{
-            if(stm!=null) try {
-                stm.close();
-            } catch (SQLException ex) {
-                Logger.getLogger(ConnettoreMysql.class.getName()).log(Level.SEVERE, null, ex);
+
+        } finally {
+            if (stm != null) {
+                try {
+                    stm.close();
+                } catch (SQLException ex) {
+                    Logger.getLogger(ConnettoreMysql.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }
-        
+
         return false;
     }
-    
+
     /**
      * metodo per la chiusura della connessione
-     * @throws SQLException 
+     *
+     * @throws SQLException
      */
-    public void close() throws SQLException{
-        if(!connection.isClosed()) connection.close();
+    public void close() throws SQLException {
+        if (!connection.isClosed()) {
+            connection.close();
+        }
     }
-    
+
 }

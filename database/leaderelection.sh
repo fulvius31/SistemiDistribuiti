@@ -25,12 +25,11 @@ do
 				break
 			else
 				backupisdead="true"
-				
-				#break
+				break
 			fi
 		fi
-	
 	done
+
 	if [ $leaderisdead = "true" ]; then
 		echo "Sending my id..."
 		for i in {200..204}
@@ -45,5 +44,8 @@ do
 			echo $possibileader > /root/leader
 			python /root/leadersend.py
 		fi
+	fi
+	if [ $backupisdead = "true" ]; then
+		sed -i "/$subnet.$i/d" /root/alivereplicas.txt
 	fi
 done
