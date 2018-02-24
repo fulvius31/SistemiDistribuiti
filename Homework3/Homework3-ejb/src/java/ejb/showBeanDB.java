@@ -21,6 +21,12 @@ import message.Message;
 @Stateless
 public class showBeanDB implements showBeanDBRemote {
 
+    /**
+     * Show 2 type of query in simple way (this code can be *improve in future
+     * development
+     *
+     * @param queryC is query of Client (Analyzer)
+     */
     @Override
     public String showBeanDB(String queryC) throws SQLException {
         ArrayList<Message> messages = new ArrayList<>();

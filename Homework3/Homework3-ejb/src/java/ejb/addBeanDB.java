@@ -16,15 +16,20 @@ import message.Message;
  * @author kvothe
  */
 @Stateless
-public class addBeanDB implements addBeanDBRemote{
+public class addBeanDB implements addBeanDBRemote {
 
+    /**
+     *
+     * @param Message from MSG-Handler to convert
+     * @param leader is the ip of primary
+     */
     @Override
     public boolean addBeanDB(Message m, String leader) throws SQLException {
-    
-        String update = " INSERT INTO log VALUES(" +
-                "\'" + m.getId() + "\'," +
-                "\'" + m.getTimestamp() + "\', "+"\'"+
-                m.getMsg()+"\'"+ ")";
+
+        String update = " INSERT INTO log VALUES("
+                + "\'" + m.getId() + "\',"
+                + "\'" + m.getTimestamp() + "\', " + "\'"
+                + m.getMsg() + "\'" + ")";
         ConnettoreMysql connettore = new ConnettoreMysql(leader);
         connettore.doUpdate(update);
         connettore.close();

@@ -20,11 +20,13 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 /**
+ * OnMessage from analyzer, do query and echo on index.html
  *
  * @author kvothe
  */
-@ServerEndpoint("/echo") 
+@ServerEndpoint("/echo")
 public class webSocket {
+
     private showBeanDBRemote lookupshowBeanDB() {
         try {
             Context c = new InitialContext();
@@ -34,64 +36,59 @@ public class webSocket {
             throw new RuntimeException(ne);
         }
     }
-   
-     
+
     /**
-     * @OnOpen allows us to intercept the creation of a new session.
-     * The session class allows us to send data to the user.
-     * In the method onOpen, we'll let the user know that the handshake was 
-     * successful.
+     * @OnOpen allows us to intercept the creation of a new session. The session
+     * class allows us to send data to the user. In the method onOpen, we'll let
+     * the user know that the handshake was successful.
      */
- 
-  
     @OnOpen
-    public void onOpen(Session session){
-        System.out.println(session.getId() + " has opened a connection"); 
+    public void onOpen(Session session) {
+        System.out.println(session.getId() + " has opened a connection");
         try {
             session.getBasicRemote().sendText("Connection Established");
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
- 
+
     /**
-     * When a user sends a message to the server, this method will intercept the message
-     * and allow us to react to it. For now the message is read as a String.
+     * When a user sends a message to the server, this method will intercept the
+     * message and allow us to react to it. For now the message is read as a
+     * String.
      */
     @OnMessage
-    public void onMessage(String message, Session session) throws ClassNotFoundException, SQLException{
-        
+    public void onMessage(String message, Session session) throws ClassNotFoundException, SQLException {
+
         String[] msg = new String[3];
-        
-        if( msg.length >= 23 ){
+
+        if (msg.length >= 23) {
             msg = opmsg.MessageHtoArray.Operation(message);
 
             //System.out.println("Message from " + session.getId() + ": " + msg[0] + msg[1] + msg[2]);
-            System.out.println("PRIMA PARTE "+msg[0]);
-            System.out.println("SECONDA PARTE "+msg[1]);
-            System.out.println("TERZA PARTE "+msg[2]);
+            System.out.println("PRIMA PARTE " + msg[0]);
+            System.out.println("SECONDA PARTE " + msg[1]);
+            System.out.println("TERZA PARTE " + msg[2]);
         }
 
         try {
-        //    NewClass s = new NewClass();
-         //String resp=   s.doQuery(message);
 
-             //System.out.println( bean.doQuery(message));
-             session.getBasicRemote().sendText( lookupshowBeanDB().showBeanDB("query1") );
-             //session.getBasicRemote().sendText( showBean.showBeanDB());
-            
-            } catch (IOException ex) {
+            //System.out.println( bean.doQuery(message));
+            session.getBasicRemote().sendText(lookupshowBeanDB().showBeanDB(message));//"query1"
+            //session.getBasicRemote().sendText( showBean.showBeanDB());
+
+        } catch (IOException ex) {
             ex.printStackTrace();
         }
-   }
- 
+    }
+
     /**
      * The user closes the connection.
-     * 
+     *
      * Note: you can't send messages to the client from this method
      */
     @OnClose
-    public void onClose(Session session){
-        System.out.println("Session " +session.getId()+" has ended");
+    public void onClose(Session session) {
+        System.out.println("Session " + session.getId() + " has ended");
     }
 }

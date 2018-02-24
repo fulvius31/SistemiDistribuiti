@@ -41,7 +41,7 @@ public class ConnettoreMysql {
     }
 
     /**
-     * esegue la query per conto del chiamante
+     * execute Query string
      *
      * @param query
      * @return ResultSet
@@ -54,7 +54,7 @@ public class ConnettoreMysql {
     }
 
     /**
-     * metodo che invoca update per conto del chiamante
+     * execute update in db
      *
      * @param update
      * @return true if ok, false otherwise
@@ -84,7 +84,7 @@ public class ConnettoreMysql {
     }
 
     /**
-     * metodo per la chiusura della connessione
+     * close connection
      *
      * @throws SQLException
      */

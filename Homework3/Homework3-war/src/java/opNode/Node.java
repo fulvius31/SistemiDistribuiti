@@ -60,9 +60,9 @@ public class Node {
 
         leader = checkLeader.actualLeader();
 
-        //creo un client manager 
+ 
         ClientManager client = ClientManager.createClient();
-        //connessione al server
+
 
         session
                 = client.connectToServer(Node.class,

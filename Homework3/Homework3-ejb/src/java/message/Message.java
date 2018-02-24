@@ -8,7 +8,7 @@ package message;
 import java.io.Serializable;
 
 /**
- *
+ *Class rapresent message from Analyzer
  * @author kvothe
  */
 public class Message implements Serializable {

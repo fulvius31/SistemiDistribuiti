@@ -6,7 +6,8 @@
 package opmsg;
 
 /**
- *
+ *Convert Message 3 substring and put them into array
+ * 
  * @author fulvius
  */
 public class MessageHtoArray {

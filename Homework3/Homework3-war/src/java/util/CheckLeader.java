@@ -13,6 +13,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Check leader in leader file. Return leader's IP
  *
  * @author fulvius
  */
